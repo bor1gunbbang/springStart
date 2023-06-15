@@ -3,6 +3,8 @@ package com.sparta.postpoject.dto;
 import com.sparta.postpoject.entity.Post;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class PostResponseDto {
     private Long id;
@@ -10,6 +12,8 @@ public class PostResponseDto {
     private String contents;
 //    private Double password;
     private String title;
+    private LocalDateTime createAt;
+    private LocalDateTime modifiedAt;
 
     public PostResponseDto(Post post) {
         this.id = post.getId();
@@ -17,6 +21,8 @@ public class PostResponseDto {
         this.contents = post.getContents();
 //        this.password = post.getPassword();
         this.title = post.getTitle();
+        this.createAt = post.getCreatedAt();
+        this.modifiedAt = post.getModifiedAt();
     }
 
 

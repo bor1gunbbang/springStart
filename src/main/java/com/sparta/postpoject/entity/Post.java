@@ -11,7 +11,7 @@ import java.util.PrimitiveIterator;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Post {
+public class Post extends Timestamped{
     private Long id;
     private String username;
     private String contents;
