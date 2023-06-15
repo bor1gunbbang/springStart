@@ -25,4 +25,11 @@ public class Post {
         this.password = requestDto.getPassword();
 
     }
+
+    public void update(PostRequestDto requestDto ) {
+        this.username = requestDto.getUsername();
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+
+    }
 }

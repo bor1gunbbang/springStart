@@ -12,7 +12,7 @@ import java.util.*;
 public class Controller {
     Scanner scan = new Scanner(System.in);
 
-    private final Map<Long, Post> postList = new HashMap<>();// 일단 DB열할을 함
+    private final Map<Long, Post> postList = new HashMap<>();// 일단 DB역할을 함
 
     @PostMapping("/posts") //게시글 작성
     public PostResponseDto createPost(@RequestBody PostRequestDto requestDto) {
@@ -43,22 +43,55 @@ public class Controller {
         return responseList;
     }
 
-//    @GetMapping("/posts/{id}")
-//    public void choosePostView(){
-//        //선택한 게시글 조회
-//        return;
-//    }
-//
-//    @PutMapping("/posts/{id}")
-//    public void editPost(){
-//        //선택 게시글 수정 후 저장
-//        return;
-//    }
-//    @DeleteMapping("/posts/{id}")
-//    public void deletePost(){
-//        //선택 게시글 삭제
-//        return;
-//    }
+    @GetMapping("/posts/{id}")
+    public String choosePostView(@PathVariable Long id,@RequestBody PostRequestDto requestDto) {
+        //선택한 게시글 조회
+
+        if (postList.containsKey(id)){
+          String result =   postList.get(id).getTitle() + postList.get(id).getUsername() +postList.get(id).getContents();
+          return result;
+        }else {
+               throw new IllegalArgumentException("선택한 게시글이 없습니다.!");
+           }
+    }
+
+    @PutMapping("/posts/{id}")
+    public Long updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto) {
+        //해당 게시글이 존재하는지 확인
+        if (postList.containsKey(id)) {
+            Post post = postList.get(id);
+            System.out.println("해당 게시글의 password를 입력하세요 >");
+            Double psw = scan.nextDouble();
+            if(psw.equals(postList.get(id).getPassword())){
+                post.update(requestDto);
+
+            }else {
+                throw new IllegalArgumentException("페스워드가 틀립니다.");
+            }
+            post.update(requestDto);
+
+            return post.getId();
+        } else {
+            throw new IllegalArgumentException("게시글이 없습니다.");
+        }
+
+
+    }
+
+    @DeleteMapping("/posts/{id}")
+    public Long deletePost(@PathVariable Long id) {
+        //선택 게시글 삭제
+        if (postList.containsKey(id)) {
+            System.out.println("해당 게시글의 암호를 입력하세요");
+            Double psw = scan.nextDouble();
+            if (psw.equals(postList.get(id).getPassword())){
+                postList.remove(id);
+            }
+            return id;
+        } else {
+            throw new IllegalArgumentException("게시글이 없습니다.");
+        }
+    }
 
 
 }
