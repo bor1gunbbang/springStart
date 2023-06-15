@@ -8,14 +8,14 @@ public class PostResponseDto {
     private Long id;
     private String username;
     private String contents;
-    private Double password;
+//    private Double password;
     private String title;
 
     public PostResponseDto(Post post) {
         this.id = post.getId();
         this.username = post.getUsername();
         this.contents = post.getContents();
-        this.password = post.getPassword();
+//        this.password = post.getPassword();
         this.title = post.getTitle();
     }
 
